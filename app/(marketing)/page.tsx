@@ -1,9 +1,15 @@
-import Image from 'next/image'
+import { Footer, Heading, Heroes } from './_components'
 
-export default function Home() {
+const Marketing = () => {
   return (
-    <div>
-      <p>Home page</p>
+    <div className="min-h-full flex flex-col">
+      <div className="flex flex-col items-center justify-center md:justify-start text-center gap-y-8 flex-1 px-6 pb-10">
+        <Heading />
+        <Heroes />
+      </div>
+      <Footer />
     </div>
   )
 }
+
+export default Marketing

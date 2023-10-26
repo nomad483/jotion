@@ -1,6 +1,6 @@
 'use client'
 
-import { PropsWithChildren, ReactNode } from 'react'
+import { PropsWithChildren } from 'react'
 import EmojiPicker, { Theme } from 'emoji-picker-react'
 import { useTheme } from 'next-themes'
 

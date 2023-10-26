@@ -10,10 +10,11 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { useMutation } from 'convex/react'
 import { ImageIcon, Smile, X } from 'lucide-react'
 
-import { IconPicker } from '@/components/icon-picker'
-import { Button } from '@/components/ui'
+import { IconPicker } from '@/components/common/icon-picker'
+import { ButtonWithImage } from '@/components/ui'
 import { api } from '@/convex/_generated/api'
 import { Doc } from '@/convex/_generated/dataModel'
+import { useCoverImage } from '@/hooks'
 
 interface Props {
   initialData: Doc<'documents'>
@@ -28,6 +29,8 @@ export const Toolbar = ({ initialData, preview }: Props) => {
 
   const update = useMutation(api.documents.update)
   const removeIcon = useMutation(api.documents.removeIcon)
+
+  const coverImage = useCoverImage()
 
   const enableInput = () => {
     if (preview) {
@@ -63,6 +66,10 @@ export const Toolbar = ({ initialData, preview }: Props) => {
     removeIcon({ id: initialData._id })
   }
 
+  const handleOpenCoverImage = () => {
+    coverImage.onOpen()
+  }
+
   return (
     <div className="pl-[54px] group relative">
       {!!initialData.icon && !preview && (
@@ -72,14 +79,13 @@ export const Toolbar = ({ initialData, preview }: Props) => {
               {initialData.icon}
             </p>
           </IconPicker>
-          <Button
+          <ButtonWithImage
             onClick={onRemoveIcon}
             className="rounded-full opacity-0 group-hover/icon:opacity-100 transition text-muted-foreground text-xs"
             variant="outline"
             size="icon"
-          >
-            <X className="h-4 w-4" />
-          </Button>
+            image={X}
+          />
         </div>
       )}
       {!!initialData.icon && preview && (
@@ -88,26 +94,26 @@ export const Toolbar = ({ initialData, preview }: Props) => {
       <div className="opacity-0 group-hover:opacity-100 flex items-center gap-x-1 py-4">
         {!initialData.icon && !preview && (
           <IconPicker onChange={onIconSelect} asChild>
-            <Button
+            <ButtonWithImage
               className="text-muted-foreground text-xs"
               variant="outline"
               size="sm"
+              image={Smile}
             >
-              <Smile className="w-4 h-4 mr-2" />
               Add icon
-            </Button>
+            </ButtonWithImage>
           </IconPicker>
         )}
         {!initialData.coverImage && !preview && (
-          <Button
-            onClick={() => {}}
+          <ButtonWithImage
+            onClick={handleOpenCoverImage}
             className="text-muted-foreground text-xs"
             variant="outline"
             size="sm"
+            image={ImageIcon}
           >
-            <ImageIcon className="h-4 w-4 mr-2" />
             Add cover image
-          </Button>
+          </ButtonWithImage>
         )}
       </div>
       {isEditing && !preview ? (
