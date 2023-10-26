@@ -1,0 +1,10 @@
+/.git
+/.vscode
+/.firebase
+.next
+build
+config
+node_modules
+__generated__
+public
+deprecate_front
